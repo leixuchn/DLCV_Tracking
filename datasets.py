@@ -30,8 +30,46 @@ class DLCVDataset(Dataset):
         return sample
 
     def get_sample(self, idx):
-        #TODO: again disuss what all is required in one sample?
-        # At present it will return (image file path, bbox for that image)
-        # bbox consists of x,y coordinates of annotations & few other parameters
-        #return (self.imageNameList[idx], self.bboxes[idx])
-        return (self.bboxes[idx])
+        ## No transformation done
+        #return sample = {'previmg': prev_img,
+        ##        'currimg': curr_img,
+        ##        'currbb' : currbb
+        ##          }
+        previmg_data = self.bboxes[idx]
+        prev_image_name = previmg_data[0]
+        prev_image_trackId = previmg_data[6]
+        prev_vv = previmg_data[5]
+        next_idx = idx + 1
+        currimg_data = self.bboxes[next_idx]
+        curr_image_name = currimg_data[0]
+        curr_vv = currimg_data[5]
+        while((prev_vv == curr_vv) and (prev_image_name == curr_image_name)):
+            next_idx = next_idx + 1
+            currimg_data = self.bboxes[next_idx]
+            curr_image_name = currimg_data[0]
+            curr_vv = currimg_data[5]
+
+        curr_image_trackId = currimg_data[6]
+        while((prev_vv == curr_vv) and (prev_image_trackId != curr_image_trackId)):
+            next_idx = next_idx + 1
+            currimg_data = self.bboxes[next_idx]
+            curr_image_trackId = currimg_data[6]
+            curr_vv = currimg_data[5]
+        sample = {'previmg': prev_image_name, 'currimg': curr_image_name, 'currbb': self.getbb(next_idx)}
+        return (sample)
+
+    def getbb(self, idx):
+        xmin = self.bboxes[idx][1]
+        ymin = self.bboxes[idx][2]
+        xmax = self.bboxes[idx][3]
+        ymax = self.bboxes[idx][4]
+        return ([xmin, ymin, xmax, ymax])
+
+
+
+
+
+
+
+
+
