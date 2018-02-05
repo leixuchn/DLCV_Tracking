@@ -1,5 +1,10 @@
+[AIM]
+Following work was done to imeplement Pytorch dataset & dataloader of Imagenet dataset.
+
+[Run procedure]
+
 1) Run testing_datasets.py
 2) Before running #1
-	a) Copy ILSVRC directory in the same director where this README is present
-	b) create a ILSVRC/ImageSets/VID/train_1.txt file
-    c) you will get ILSVRC director once you extract "Data for DLCV" zip file from Rajat
+      a) Copy ILSVRC directory in the same director where this README is present
+      b) create a ILSVRC/ImageSets/VID/train_1.txt file
+      c) you will get ILSVRC director once you extract "Data for DLCV" zip file from Rajat
